@@ -1,0 +1,19 @@
+<HTML>
+<HEAD>
+<SCRIPT LANGUAGE="JavaScript1.1">
+function openOLAP() {
+   document.olapbase.dwidth.value = screen.width
+   if (history.length == 0)
+      document.olapbase.subwindow.value = "1"
+   document.olapbase.submit()
+}
+</SCRIPT>
+</HEAD>
+<BODY onload="openOLAP()">
+<FORM NAME="olapbase" ACTION="index.cgi" METHOD="post">
+<INPUT TYPE="hidden" NAME="funk" VALUE="STANDARDRAP">
+<INPUT TYPE="hidden" NAME="rapport" VALUE="">
+<INPUT TYPE="hidden" NAME="dwidth" VALUE="">
+<INPUT TYPE="hidden" NAME="subwindow" VALUE="0">
+</FORM>
+</HTML>

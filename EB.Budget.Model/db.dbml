@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EBBudget" Class="dbDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=WOODS\SQLEXPRESS;Initial Catalog=EBBudget;Integrated Security=True" SettingsObjectName="EB.Budget.Model.Properties.Settings" SettingsPropertyName="EBBudgetConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.BudgetLine" Member="BudgetLines">
+    <Type Name="BudgetLine">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LineCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="ParentLineId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CurrentBudget" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="BudgetYear1" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="BudgetYear2" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="BudgetYear3" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="BudgetMinusYear1" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="BudgetMinusYear2" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="LineLevel" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="LineName" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Association Name="BudgetLine_BudgetLine" Member="BudgetLines" ThisKey="Id" OtherKey="ParentLineId" Type="BudgetLine" />
+      <Association Name="BudgetLine_BudgetLine" Member="BudgetLine1" ThisKey="ParentLineId" OtherKey="Id" Type="BudgetLine" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
