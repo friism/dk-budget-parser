@@ -570,8 +570,6 @@ namespace EB.Budget.Parser
 			//return s.Reencode(Encoding.GetEncoding("windows-1252"), Encoding.UTF8);
 			return s.Replace("ø", "oe").Replace("å", "aa").Replace("æ", "ae").
 				Replace("Ø", "Oe").Replace("Å", "Aa").Replace("Æ", "Ae");
-			//return s;
 		}
-
 	}
 }
