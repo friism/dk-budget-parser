@@ -89,7 +89,7 @@ namespace EB.Budget.Parser
 			b.LineLevel == 5 &&
 			b.CurrentBudget > 0 &&
 
-				// these two eliminate 'afdrag på statsgælden' and 'skatter og afgifter' because they involve refinancing and other crap
+			// these two eliminate 'afdrag på statsgælden' and 'skatter og afgifter' because they involve refinancing and other crap
 			b.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.LineCode != "38" &&
 			b.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.LineCode != "42"
 			);
@@ -334,6 +334,15 @@ namespace EB.Budget.Parser
 
 		private static void Parse(int year)
 		{
+			var lines = Read(year);
+			var db = new dbDataContext();
+			db.BudgetLines.InsertAllOnSubmit(lines);
+			Console.WriteLine("submitting...");
+			db.SubmitChanges();
+		}
+
+		private static IEnumerable<BudgetLine> Read(int year)
+		{
 			StreamReader streamReader = new StreamReader("..\\..\\data\\" + year + ".html", Encoding.GetEncoding("ISO-8859-1"));
 			string text = streamReader.ReadToEnd();
 			streamReader.Close();
@@ -355,8 +364,6 @@ namespace EB.Budget.Parser
 
 			HtmlDocument doc = new HtmlDocument();
 			doc.LoadHtml(perfect);
-
-			var db = new dbDataContext();
 
 			var trs = doc.DocumentNode.ChildNodes[0].ChildNodes;
 			var lineatlevel = new Dictionary<int, BudgetLine>();
@@ -399,12 +406,8 @@ namespace EB.Budget.Parser
 					line.BudgetLine1 = lineatlevel[linelevel - 1];
 				}
 				lineatlevel[linelevel] = line;
-				db.BudgetLines.InsertOnSubmit(line);
+				yield return line;
 			}
-			Console.WriteLine("submitting...");
-			db.SubmitChanges();
-			//Console.WriteLine("please press the any key...");
-			//Console.ReadKey();
 		}
 
 		static decimal GetAmount(string s)
