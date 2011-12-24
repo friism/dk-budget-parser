@@ -77,23 +77,28 @@ namespace EB.Budget.Parser
 				);
 		}
 
-		private static IQueryable<BudgetLine> GetTopLevelLines(dbDataContext db)
+		private static IEnumerable<BudgetLine> GetTopLevelLines(dbDataContext db)
 		{
 			return GetTopLevelLines(db, _ => true);
 		}
 
-		private static IQueryable<BudgetLine> GetTopLevelLines(dbDataContext db,
-			Expression<Func<BudgetLine, bool>> selector)
+		private static IEnumerable<BudgetLine> GetTopLevelLines(IEnumerable<BudgetLine> lines,
+			Func<BudgetLine, bool> selector)
 		{
-			var lastlevels = db.BudgetLines.Where(selector).Where(b =>
-			b.LineLevel == 5 &&
-			b.CurrentBudget > 0 &&
-
-			// these two eliminate 'afdrag på statsgælden' and 'skatter og afgifter' because they involve refinancing and other crap
-			b.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.LineCode != "38" &&
-			b.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.LineCode != "42"
+			var lastlevels = lines.Where(selector).Where(b =>
+				b.LineLevel == 5 &&
+				b.CurrentBudget > 0 &&
+				// these two eliminate 'afdrag på statsgælden' and 'skatter og afgifter' because they involve refinancing and other crap
+				b.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.LineCode != "38" &&
+				b.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.BudgetLine1.LineCode != "42"
 			);
 			return lastlevels;
+		}
+
+		private static IEnumerable<BudgetLine> GetTopLevelLines(dbDataContext db,
+			Func<BudgetLine, bool> selector)
+		{
+			return GetTopLevelLines(db.BudgetLines, selector);
 		}
 
 		private static void Output(int year)
