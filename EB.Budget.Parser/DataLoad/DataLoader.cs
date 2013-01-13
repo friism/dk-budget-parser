@@ -8,7 +8,7 @@ using EB.Budget.Model;
 using EB.Budget.Persistence;
 using HtmlAgilityPack;
 
-namespace EB.Budget.Parser.DataLoad
+namespace EB.Budget.DataLoad
 {
 	public class DataLoader
 	{

@@ -1,4 +1,5 @@
 ﻿using System;
+using EB.Budget.DataLoad;
 
 namespace EB.Budget
 {
@@ -6,7 +7,8 @@ namespace EB.Budget
 	{
 		static void Main(string[] args)
 		{
-			//var lines = Read(2012);
+			var loader = new DataLoader();
+			var lines = loader.Read(2013);
 			//Output(2012);
 			//Console.WriteLine("Total line count: {0}", lines.Count());
 			//OutputByCategory();

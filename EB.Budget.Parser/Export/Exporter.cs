@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using AutoMapper;
+using EB.Budget.DataLoad;
 using EB.Budget.Model;
-using EB.Budget.Parser.DataLoad;
 using EB.Budget.Persistence;
 using FileHelpers;
 
-namespace EB.Budget.Parser.Export
+namespace EB.Budget.Export
 {
 	public class Exporter
 	{

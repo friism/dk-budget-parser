@@ -8,7 +8,7 @@
     <ProjectGuid>{016B200E-79F3-49D4-9915-A0710D2425B0}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EB.Budget.Parser</RootNamespace>
+    <RootNamespace>EB.Budget</RootNamespace>
     <AssemblyName>EB.Budget.Parser</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
