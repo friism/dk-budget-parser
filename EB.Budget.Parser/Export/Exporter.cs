@@ -58,27 +58,28 @@ namespace EB.Budget.Export
 			//}
 		}
 
-		private static void ExportAll()
+		public void ExportAll()
 		{
 			var header = new FullExportLine
 			{
-				BudgetMinusYear1 = "budgetminusyear1",
-				BudgetMinusYear2 = "budgetminusyear2",
-				BudgetYear1 = "budgetyear1",
-				BudgetYear2 = "budgetyear2",
-				BudgetYear3 = "budgetyear3",
-				CurrentBudget = "currentbudget",
-				Id = "id",
-				LineCode = "linecode",
-				LineId = "lineid",
-				LineLevel = "linelevel",
-				LineName = "linename",
-				ParentLineId = "parentlineid",
-				Year = "year"
+				PreviousYear1Budget = "PreviousYear1Budget",
+				PreviousYear2Budget = "PreviousYear2Budget",
+				Year1Budget = "Year1Budget",
+				Year2Budget = "Year2Budget",
+				Year3Budget = "Year3Budget",
+				CurrentYearBudget = "CurrentYearBudget",
+				Id = "Id",
+				LineCode = "LineCode",
+				LineLevel = "LineLevel",
+				LineName = "LineName",
+				ParentBudgetLine = "ParentBudgetLine",
+				Year = "Year"
 			};
 
 			var db = new Context();
-			var lines = db.BudgetLines;
+			var lines = db.BudgetLines
+				.OrderBy(x => x.Year).ThenBy(x => x.LineCode)
+				.ToList();
 			Mapper.CreateMap<BudgetLine, FullExportLine>();
 
 			var exportlines = (new List<FullExportLine>() { header }).
@@ -92,13 +93,7 @@ namespace EB.Budget.Export
 			}
 
 			FileHelperEngine<FullExportLine> eng = new FileHelperEngine<FullExportLine>();
-			//var headerline = new List<BudgetLine> { new BudgetLine{
-
-			//}};
-			eng.WriteFile("alllines.csv",
-				exportlines
-				//headerline.Concat(lines)
-				);
+			eng.WriteFile("alllines.csv", exportlines);
 		}
 
 		private static IEnumerable<BudgetLine> GetTopLevelLines(Context db)
@@ -477,23 +472,21 @@ namespace EB.Budget.Export
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
 		public string LineCode;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
-		public string LineId;
-		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
-		public string ParentLineId;
+		public string ParentBudgetLine;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
 		public string Year;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
-		public string CurrentBudget;
+		public string CurrentYearBudget;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
-		public string BudgetYear1;
+		public string Year1Budget;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
-		public string BudgetYear2;
+		public string Year2Budget;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
-		public string BudgetYear3;
+		public string Year3Budget;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
-		public string BudgetMinusYear1;
+		public string PreviousYear1Budget;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
-		public string BudgetMinusYear2;
+		public string PreviousYear2Budget;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
 		public string LineLevel;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
