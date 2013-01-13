@@ -14,9 +14,21 @@ namespace EB.Budget.DataLoad
 	{
 		public void ParseAll()
 		{
-			foreach (var year in Enumerable.Range(2003, 11))
+			var lines = Enumerable.Range(2003, 11).SelectMany(x => Read(x));
+			var context = new Context();
+			try
 			{
-				Parse(year);
+				context.Configuration.AutoDetectChangesEnabled = false;
+
+				foreach (var line in lines)
+				{
+					context.BudgetLines.Add(line);
+				}
+				context.SaveChanges();
+			}
+			finally
+			{
+				context.Configuration.AutoDetectChangesEnabled = true;
 			}
 		}
 
