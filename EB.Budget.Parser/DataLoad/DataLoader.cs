@@ -12,7 +12,7 @@ namespace EB.Budget.DataLoad
 {
 	public class DataLoader
 	{
-		public void ParseAll()
+		public void ParseAndStoreAll()
 		{
 			var lines = Enumerable.Range(2003, 11).SelectMany(x => Read(x));
 			var context = new Context();
@@ -32,7 +32,7 @@ namespace EB.Budget.DataLoad
 			}
 		}
 
-		public void Parse(int year)
+		public void ParseAndStore(int year)
 		{
 			using (var db = new Context())
 			{
