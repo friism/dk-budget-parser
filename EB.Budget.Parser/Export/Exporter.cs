@@ -106,7 +106,7 @@ namespace EB.Budget.Export
 			var lastlevels = lines.Where(b =>
 				b.LineLevel == 5 &&
 				b.CurrentYearBudget > 0 &&
-					// these two eliminate 'afdrag på statsgælden' and 'skatter og afgifter' because they involve refinancing and other crap
+				// these two eliminate 'afdrag på statsgælden' and 'skatter og afgifter' because they involve refinancing and other crap
 				b.ParentBudgetLine.ParentBudgetLine.ParentBudgetLine.ParentBudgetLine.ParentBudgetLine.LineCode != "38" &&
 				b.ParentBudgetLine.ParentBudgetLine.ParentBudgetLine.ParentBudgetLine.ParentBudgetLine.LineCode != "42"
 			);
