@@ -119,7 +119,7 @@ namespace EB.Budget.Export
 			return GetTopLevelLines(db.BudgetLines.Where(selector));
 		}
 
-		private static void Output(int year)
+		public void OutputForTreeMapDisplay(int year)
 		{
 			var alllines = new DataLoader().Read(year);
 
