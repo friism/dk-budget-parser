@@ -72,7 +72,7 @@ namespace EB.Budget.Export
 				LineCode = "LineCode",
 				LineLevel = "LineLevel",
 				LineName = "LineName",
-				ParentBudgetLine = "ParentBudgetLine",
+				ParentBudgetLineId = "ParentBudgetLine",
 				Year = "Year"
 			};
 
@@ -84,7 +84,15 @@ namespace EB.Budget.Export
 
 			var exportlines = (new List<FullExportLine>() { header }).
 				Concat(
-					lines.Select(_ => Mapper.Map<BudgetLine, FullExportLine>(_))
+					lines.Select(x =>
+						{
+							var output = Mapper.Map<BudgetLine, FullExportLine>(x);
+							if (x.ParentBudgetLine != null)
+							{
+								output.ParentBudgetLineId = string.Format("{0}", x.ParentBudgetLine.Id);
+							}
+							return output;
+						})
 				);
 
 			foreach (var l in exportlines)
@@ -472,7 +480,7 @@ namespace EB.Budget.Export
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
 		public string LineCode;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
-		public string ParentBudgetLine;
+		public string ParentBudgetLineId;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
 		public string Year;
 		[FieldQuoted('"', QuoteMode.AlwaysQuoted)]
